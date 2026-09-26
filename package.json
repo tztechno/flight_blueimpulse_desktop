@@ -1,0 +1,23 @@
+{
+  "name": "blue-impulse-matsushima-flight-simulator",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "build:desktop": "tauri build",
+    "dev:desktop": "tauri dev"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.11.1",
+    "lucide": "^0.475.0",
+    "three": "^0.174.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.11.5",
+    "vite": "^6.2.0"
+  }
+}
