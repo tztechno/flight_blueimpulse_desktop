@@ -32,7 +32,7 @@ export class TelemetryUI {
               <span class="tms-sep">•</span>
               <span class="tms-item" id="tms-g">+1.0 G</span>
               <span class="tms-sep">•</span>
-              <span class="tms-item" id="tms-phase">離陸滑走</span>
+              <span class="tms-item" id="tms-phase">${i18n.lang === 'ja' ? '離陸滑走' : 'Takeoff Roll'}</span>
             </div>
           </div>
           <button class="tele-toggle-btn" id="telemetry-collapse-btn" title="${this.isCollapsed ? (i18n.t('expandTelemetry') || '計器・タイムラインを展開 [T]') : (i18n.t('collapseTelemetry') || '計器・タイムラインを折りたたむ [T]')}">
@@ -100,15 +100,15 @@ export class TelemetryUI {
 
             <!-- Attitude Pitch / Bank -->
             <div class="gauge-card">
-              <div class="gauge-label">姿勢 (P / B)</div>
+              <div class="gauge-label">${i18n.t('attitudeLabel') || (i18n.lang === 'ja' ? '姿勢 (P / B)' : 'Attitude (P / B)')}</div>
               <div class="gauge-value" id="val-attitude">+0° / 0°</div>
               <div class="gauge-sub" id="val-gear-status">GEAR UP</div>
             </div>
 
             <!-- Status Badge -->
             <div class="gauge-card status-card">
-              <div class="gauge-label">演目進行フェーズ</div>
-              <div class="status-badge" id="val-status-badge">離陸滑走</div>
+              <div class="gauge-label">${i18n.t('routinePhaseLabel') || (i18n.lang === 'ja' ? '演目進行フェーズ' : 'Routine Phase')}</div>
+              <div class="status-badge" id="val-status-badge">${i18n.lang === 'ja' ? '離陸滑走' : 'Takeoff Roll'}</div>
             </div>
           </div>
         </div>
@@ -218,6 +218,7 @@ export class TelemetryUI {
   }
 
   update(telemetry = {}) {
+    const isJa = i18n.lang === 'ja';
     const spdKt = Math.round(telemetry.airspeedKt || 0);
     const altFt = Math.round(telemetry.altitudeFt || 0);
     const altM = Math.round(altFt / 3.28084);
@@ -228,7 +229,8 @@ export class TelemetryUI {
     const bank = Math.round(telemetry.bankDeg || 0);
     const curTime = telemetry.currentTime || 0;
     const totalTime = telemetry.totalTime || 55;
-    const phaseName = telemetry.phaseName || (telemetry.isManual ? '手動操縦中' : 'アクロバット飛行');
+    const resolvedPhase = isJa ? telemetry.phaseName : (telemetry.phaseNameEn || telemetry.phaseName);
+    const phaseName = resolvedPhase || (telemetry.isManual ? (isJa ? '手動操縦中' : 'Manual Flight') : (isJa ? 'アクロバット飛行' : 'Display Aerobatics'));
 
     // Update live mini stats in header (visible when collapsed or expanded)
     const tmsSpd = this.container.querySelector('#tms-spd');

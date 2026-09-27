@@ -715,10 +715,11 @@ class BlueImpulseApp {
   }
 
   getSyncRank(score) {
-    if (score >= 92) return { rank: 'RANK S (神業)', class: 'rank-s' };
-    if (score >= 82) return { rank: 'RANK A (優秀)', class: 'rank-a' };
-    if (score >= 68) return { rank: 'RANK B (良好)', class: 'rank-b' };
-    return { rank: 'RANK C (離脱)', class: 'rank-c' };
+    const isJa = i18n.lang === 'ja';
+    if (score >= 92) return { rank: isJa ? 'RANK S (神業)' : 'RANK S (Master)', class: 'rank-s' };
+    if (score >= 82) return { rank: isJa ? 'RANK A (優秀)' : 'RANK A (Excellent)', class: 'rank-a' };
+    if (score >= 68) return { rank: isJa ? 'RANK B (良好)' : 'RANK B (Good)', class: 'rank-b' };
+    return { rank: isJa ? 'RANK C (離脱)' : 'RANK C (Displaced)', class: 'rank-c' };
   }
 
   onKeyDown(e) {
@@ -997,14 +998,14 @@ class BlueImpulseApp {
     const isSoloFreeFlight = (this.mainMode === '1_plane' && routineId === 'free_flight');
 
     const liveryNames = {
-      gold: '🏆 白＋ゴールド',
-      red: '🔥 白＋レッド',
-      neon: '⚡ 白＋ネオン',
-      stealth: '🔶 白＋オレンジ',
-      sakura: '🌸 白＋サクラ',
-      standard: '⚪ 白＋標準ブルー',
+      gold: isJa ? '🏆 白＋ゴールド' : '🏆 Special Gold',
+      red: isJa ? '🔥 白＋レッド' : '🔥 Crimson Red',
+      neon: isJa ? '⚡ 白＋ネオン' : '⚡ Cyber Neon',
+      stealth: isJa ? '🔶 白＋オレンジ' : '🔶 Hi-Vis Orange',
+      sakura: isJa ? '🌸 白＋サクラ' : '🌸 Sakura Pink',
+      standard: isJa ? '⚪ 白＋標準ブルー' : '⚪ Standard Blue',
     };
-    const liveryBadge = liveryNames[this.pilotLivery] || '🏆 白＋ゴールド';
+    const liveryBadge = liveryNames[this.pilotLivery] || (isJa ? '🏆 白＋ゴールド' : '🏆 Special Gold');
 
     // 1. Solo Free Flight Mode (Always consistent, never flickers on ground vs airborne)
     if (isSoloFreeFlight) {
@@ -1309,7 +1310,8 @@ class BlueImpulseApp {
           isSmoking: frame.isSmoking,
           currentTime: this.currentTime,
           totalTime: this.routine.totalDuration,
-          phaseName: frame.phaseName,
+          phaseName: isJa ? frame.phaseName : (frame.phaseNameEn || frame.phaseName),
+          phaseNameEn: frame.phaseNameEn,
           pilotRoleText: camText,
           isManual: false,
         };
@@ -1397,14 +1399,15 @@ class BlueImpulseApp {
       );
 
       // Boarded role mapping
+      const isJa = i18n.lang === 'ja';
       const boardMap = {
-        '1_lead': { idx: 0, badge: 'PILOT: #1 LEAD [👑]', name: '1番機(編隊長) 操縦中' },
-        '2_wing': { idx: 1, badge: 'PILOT: #2 WING [🪶]', name: '2番機(左翼) 僚機操縦中' },
-        '3_wing': { idx: 2, badge: 'PILOT: #3 WING [🪶]', name: '3番機(右翼) 僚機操縦中' },
-        '4_slot': { idx: 3, badge: 'PILOT: #4 SLOT [🎯]', name: '4番機(スロット) 操縦中' },
-        '5_solo': { idx: 4, badge: 'PILOT: #5 SOLO [⚡]', name: '5番機(ソロ機) アクロバット操縦中' },
+        '1_lead': { idx: 0, badge: 'PILOT: #1 LEAD [👑]', name: isJa ? '1番機(編隊長) 操縦中' : '#1 Lead Piloting' },
+        '2_wing': { idx: 1, badge: 'PILOT: #2 WING [🪶]', name: isJa ? '2番機(左翼) 僚機操縦中' : '#2 Left Wing Piloting' },
+        '3_wing': { idx: 2, badge: 'PILOT: #3 WING [🪶]', name: isJa ? '3番機(右翼) 僚機操縦中' : '#3 Right Wing Piloting' },
+        '4_slot': { idx: 3, badge: 'PILOT: #4 SLOT [🎯]', name: isJa ? '4番機(スロット) 操縦中' : '#4 Slot Piloting' },
+        '5_solo': { idx: 4, badge: 'PILOT: #5 SOLO [⚡]', name: isJa ? '5番機(ソロ機) アクロバット操縦中' : '#5 Solo Aerobatics' },
       };
-      const curBoard = this.mainMode === '5_planes' ? (boardMap[this.boardedAircraft] || boardMap['1_lead']) : { idx: 0, badge: 'SOLO PILOT [🛩️]', name: '単独ソロ操縦' };
+      const curBoard = this.mainMode === '5_planes' ? (boardMap[this.boardedAircraft] || boardMap['1_lead']) : { idx: 0, badge: 'SOLO PILOT [🛩️]', name: isJa ? '単独ソロ操縦' : 'Solo Flight' };
 
       // Calculate Formation Synchronicity Score
       this.calculateFormationSync(playerState, idealFrame, curBoard.idx);
@@ -1469,6 +1472,10 @@ class BlueImpulseApp {
         isGrounded: playerState.isGrounded,
       });
 
+      const currentPhaseName = isSoloFreeFlight
+        ? (isJa ? '🕊️ 完全自由飛行 (時間無制限)' : '🕊️ Free Flight (Unlimited)')
+        : (idealFrame ? (isJa ? idealFrame.phaseName : (idealFrame.phaseNameEn || idealFrame.phaseName)) : curBoard.name);
+
       telemetryData = {
         altitudeFt: playerState.altitudeFt,
         airspeedKt: playerState.airspeedKt,
@@ -1484,7 +1491,8 @@ class BlueImpulseApp {
         currentTime: this.currentTime,
         totalTime: isSoloFreeFlight ? Infinity : this.routine.totalDuration,
         isFreeFlight: isSoloFreeFlight,
-        phaseName: isSoloFreeFlight ? (i18n.lang === 'ja' ? '🕊️ 完全自由飛行 (時間無制限)' : '🕊️ Free Flight (Unlimited)') : (idealFrame ? idealFrame.phaseName : curBoard.name),
+        phaseName: currentPhaseName,
+        phaseNameEn: isSoloFreeFlight ? '🕊️ Free Flight (Unlimited)' : (idealFrame ? idealFrame.phaseNameEn : curBoard.name),
         pilotRoleText: isSoloFreeFlight ? 'SOLO FREE FLIGHT' : `${curBoard.badge} [${this.pilotLivery.toUpperCase()}]`,
         isManual: true,
       };

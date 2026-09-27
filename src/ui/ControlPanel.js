@@ -91,7 +91,7 @@ export class ControlPanel {
           ${this.mainMode === '5_planes' ? `
             <!-- Routine Selector -->
             <div class="control-group">
-              <label class="group-label">${this.subMode === 'auto' ? (isJa ? '鑑賞する演目' : 'Display Routine') : (isJa ? '挑戦する演目' : 'Routine Maneuver')}</label>
+              <label class="group-label">${i18n.t(this.subMode === 'auto' ? 'displayRoutineLabel' : 'routineManeuverLabel')}</label>
               <select class="custom-select" id="routine-select">
                 <option value="diamond_takeoff" ${this.routineId === 'diamond_takeoff' ? 'selected' : ''}>${i18n.t('routineDiamondTakeoff')}</option>
                 <option value="delta_loop" ${this.routineId === 'delta_loop' ? 'selected' : ''}>${i18n.t('routineDeltaLoop')}</option>
@@ -106,27 +106,27 @@ export class ControlPanel {
             ${this.subMode === 'auto' ? `
               <!-- 5-Ship AUTO SPECTATOR MODE -->
               <div class="control-group">
-                <label class="group-label">${isJa ? '鑑賞コックピット視点' : 'Cockpit View'}</label>
+                <label class="group-label">${i18n.t('cockpitViewLabel')}</label>
                 <div class="plane-select-grid">
                   <button class="plane-card-btn ${this.selectedCockpitView === 'cockpit_1' ? 'active' : ''}" data-cockpit="cockpit_1">
-                    <span class="p-badge">👑 1番機</span>
-                    <span class="p-role">編隊長</span>
+                    <span class="p-badge">${i18n.t('cockpit1Short')}</span>
+                    <span class="p-role">${i18n.t('roleLeader')}</span>
                   </button>
                   <button class="plane-card-btn ${this.selectedCockpitView === 'cockpit_2' ? 'active' : ''}" data-cockpit="cockpit_2">
-                    <span class="p-badge">🪶 2番機</span>
-                    <span class="p-role">左翼機</span>
+                    <span class="p-badge">${i18n.t('cockpit2Short')}</span>
+                    <span class="p-role">${i18n.t('roleLeftWing')}</span>
                   </button>
                   <button class="plane-card-btn ${this.selectedCockpitView === 'cockpit_3' ? 'active' : ''}" data-cockpit="cockpit_3">
-                    <span class="p-badge">🪶 3番機</span>
-                    <span class="p-role">右翼機</span>
+                    <span class="p-badge">${i18n.t('cockpit3Short')}</span>
+                    <span class="p-role">${i18n.t('roleRightWing')}</span>
                   </button>
                   <button class="plane-card-btn ${this.selectedCockpitView === 'cockpit_4' ? 'active' : ''}" data-cockpit="cockpit_4">
-                    <span class="p-badge">🎯 4番機</span>
-                    <span class="p-role">スロット</span>
+                    <span class="p-badge">${i18n.t('cockpit4Short')}</span>
+                    <span class="p-role">${i18n.t('roleSlot')}</span>
                   </button>
                   <button class="plane-card-btn ${this.selectedCockpitView === 'cockpit_5' ? 'active' : ''}" data-cockpit="cockpit_5">
-                    <span class="p-badge">⚡ 5番機</span>
-                    <span class="p-role">ソロ機</span>
+                    <span class="p-badge">${i18n.t('cockpit5Short')}</span>
+                    <span class="p-role">${i18n.t('roleSolo')}</span>
                   </button>
                 </div>
                 <div class="cockpit-desc-box" id="cockpit-desc-box">
@@ -136,27 +136,27 @@ export class ControlPanel {
             ` : `
               <!-- 5-Ship ROUTINE PILOT CHALLENGE MODE -->
               <div class="control-group">
-                <label class="group-label">${isJa ? '操縦担当機 (搭乗する機体)' : 'Board Aircraft'}</label>
+                <label class="group-label">${i18n.t('boardAircraftLabel')}</label>
                 <div class="plane-select-grid">
                   <button class="plane-card-btn ${this.boardedAircraft === '1_lead' ? 'active' : ''}" data-board="1_lead">
-                    <span class="p-badge">👑 1番機</span>
-                    <span class="p-role">編隊長リード</span>
+                    <span class="p-badge">${i18n.t('cockpit1Short')}</span>
+                    <span class="p-role">${i18n.t('roleBoardLeader')}</span>
                   </button>
                   <button class="plane-card-btn ${this.boardedAircraft === '2_wing' ? 'active' : ''}" data-board="2_wing">
-                    <span class="p-badge">🪶 2番機</span>
-                    <span class="p-role">左翼僚機</span>
+                    <span class="p-badge">${i18n.t('cockpit2Short')}</span>
+                    <span class="p-role">${i18n.t('roleBoardLeftWing')}</span>
                   </button>
                   <button class="plane-card-btn ${this.boardedAircraft === '3_wing' ? 'active' : ''}" data-board="3_wing">
-                    <span class="p-badge">🪶 3番機</span>
-                    <span class="p-role">右翼僚機</span>
+                    <span class="p-badge">${i18n.t('cockpit3Short')}</span>
+                    <span class="p-role">${i18n.t('roleBoardRightWing')}</span>
                   </button>
                   <button class="plane-card-btn ${this.boardedAircraft === '4_slot' ? 'active' : ''}" data-board="4_slot">
-                    <span class="p-badge">🎯 4番機</span>
-                    <span class="p-role">スロット</span>
+                    <span class="p-badge">${i18n.t('cockpit4Short')}</span>
+                    <span class="p-role">${i18n.t('roleBoardSlot')}</span>
                   </button>
                   <button class="plane-card-btn ${this.boardedAircraft === '5_solo' ? 'active' : ''}" data-board="5_solo">
-                    <span class="p-badge">⚡ 5番機</span>
-                    <span class="p-role">ソロ機動</span>
+                    <span class="p-badge">${i18n.t('cockpit5Short')}</span>
+                    <span class="p-role">${i18n.t('roleBoardSolo')}</span>
                   </button>
                 </div>
                 <div class="board-desc-banner" id="board-desc-banner">
@@ -175,15 +175,15 @@ export class ControlPanel {
                 </div>
 
                 <div class="cockpit-toggle-row">
-                  <button class="cockpit-act-btn ${this.gear > 0.5 ? 'gear-active' : ''}" id="btn-toggle-gear" title="車輪(ギア)の格納・展開 [Gキー]">
+                  <button class="cockpit-act-btn ${this.gear > 0.5 ? 'gear-active' : ''}" id="btn-toggle-gear" title="${isJa ? '車輪(ギア)の格納・展開 [Gキー]' : 'Toggle Landing Gear [G]'}">
                     <span class="btn-subtext">[G]</span>
                     <span class="gear-btn-label">${this.gear > 0.5 ? (isJa ? '車輪 (展開)' : 'Gear Down') : (isJa ? '車輪 (格納)' : 'Gear Up')}</span>
                   </button>
-                  <button class="cockpit-act-btn ${this.airbrake > 0.5 ? 'brake-active' : ''}" id="btn-toggle-airbrake" title="エアブレーキの開閉 [Bキー]">
+                  <button class="cockpit-act-btn ${this.airbrake > 0.5 ? 'brake-active' : ''}" id="btn-toggle-airbrake" title="${isJa ? 'エアブレーキの開閉 [Bキー]' : 'Toggle Speed Brake [B]'}">
                     <span class="btn-subtext">[B]</span>
                     <span class="brake-btn-label">${this.airbrake > 0.5 ? (isJa ? 'ブレーキ (開)' : 'Brake (ON)') : (isJa ? 'ブレーキ (閉)' : 'Brake (OFF)')}</span>
                   </button>
-                  <button class="cockpit-act-btn ${this.smokeOn ? 'smoke-active' : ''}" id="btn-manual-smoke" title="スモーク噴射切替 [Spaceキー]">
+                  <button class="cockpit-act-btn ${this.smokeOn ? 'smoke-active' : ''}" id="btn-manual-smoke" title="${isJa ? 'スモーク噴射切替 [Spaceキー]' : 'Toggle Smoke [Space]'}">
                     <span class="btn-subtext">[Space]</span>
                     <span class="smoke-btn-label">${this.smokeOn ? (isJa ? 'スモーク (ON)' : 'Smoke ON') : (isJa ? 'スモーク (OFF)' : 'Smoke OFF')}</span>
                   </button>
@@ -195,29 +195,29 @@ export class ControlPanel {
             <!-- 3B. 1-PLANE SOLO MODE CONTENT              -->
             <!-- ========================================== -->
             <div class="control-group">
-              <label class="group-label">${isJa ? 'ソロ 飛行演目・モード選択' : 'Solo Flight Mode'}</label>
+              <label class="group-label">${i18n.t('soloFlightModeLabel')}</label>
               <select class="custom-select" id="routine-select">
-                <option value="free_flight" ${this.routineId === 'free_flight' ? 'selected' : ''}>🕊️ 完全自由飛行 (フリーフライト・松島基地/松島湾)</option>
-                <option value="delta_loop" ${this.routineId === 'delta_loop' ? 'selected' : ''}>1. 単独垂直大宙返り ＆ バレルロール (演技挑戦)</option>
-                <option value="corkscrew" ${this.routineId === 'corkscrew' ? 'selected' : ''}>2. 連続スパイラルロール (コークスクリュー・演技挑戦)</option>
-                <option value="diamond_takeoff" ${this.routineId === 'diamond_takeoff' ? 'selected' : ''}>3. 滑走路07 離陸 ＆ 急上昇クライム (離陸挑戦)</option>
-                <option value="combat_pitch" ${this.routineId === 'combat_pitch' ? 'selected' : ''}>4. コンバットピッチ ＆ 滑走路着陸 (着陸挑戦)</option>
+                <option value="free_flight" ${this.routineId === 'free_flight' ? 'selected' : ''}>${i18n.t('routineSoloFreeFlight')}</option>
+                <option value="delta_loop" ${this.routineId === 'delta_loop' ? 'selected' : ''}>${i18n.t('routineSoloLoop')}</option>
+                <option value="corkscrew" ${this.routineId === 'corkscrew' ? 'selected' : ''}>${i18n.t('routineSoloCorkscrew')}</option>
+                <option value="diamond_takeoff" ${this.routineId === 'diamond_takeoff' ? 'selected' : ''}>${i18n.t('routineSoloTakeoff')}</option>
+                <option value="combat_pitch" ${this.routineId === 'combat_pitch' ? 'selected' : ''}>${i18n.t('routineSoloLanding')}</option>
               </select>
             </div>
 
             ${this.subMode === 'manual' ? `
               <!-- Solo Spawn Position Presets -->
               <div class="control-group">
-                <label class="group-label">${isJa ? '🛫 出現位置 / Start Position' : 'Start Position'}</label>
+                <label class="group-label">${i18n.t('startPositionLabel')}</label>
                 <div class="btn-grid-3">
-                  <button class="preset-btn ${this.manualPreset === 'runway_takeoff' ? 'active' : ''}" data-preset="runway_takeoff" title="滑走路07 離陸開始位置">
-                    <span>🛫 滑走路07</span>
+                  <button class="preset-btn ${this.manualPreset === 'runway_takeoff' ? 'active' : ''}" data-preset="runway_takeoff" title="${i18n.t('presetRunwayTip')}">
+                    <span>${i18n.t('presetRunway')}</span>
                   </button>
-                  <button class="preset-btn ${this.manualPreset === 'airborne_bay' ? 'active' : ''}" data-preset="airborne_bay" title="松島湾上空 2,500ft 巡航">
-                    <span>✈️ 上空2,500ft</span>
+                  <button class="preset-btn ${this.manualPreset === 'airborne_bay' ? 'active' : ''}" data-preset="airborne_bay" title="${i18n.t('presetAirborneTip')}">
+                    <span>${i18n.t('presetAirborne')}</span>
                   </button>
-                  <button class="preset-btn ${this.manualPreset === 'final_approach' ? 'active' : ''}" data-preset="final_approach" title="滑走路07 最終進入 3km">
-                    <span>🛬 着陸進入</span>
+                  <button class="preset-btn ${this.manualPreset === 'final_approach' ? 'active' : ''}" data-preset="final_approach" title="${i18n.t('presetApproachTip')}">
+                    <span>${i18n.t('presetApproach')}</span>
                   </button>
                 </div>
               </div>
@@ -233,15 +233,15 @@ export class ControlPanel {
                 </div>
 
                 <div class="cockpit-toggle-row">
-                  <button class="cockpit-act-btn ${this.gear > 0.5 ? 'gear-active' : ''}" id="btn-toggle-gear" title="車輪(ギア)の格納・展開 [Gキー]">
+                  <button class="cockpit-act-btn ${this.gear > 0.5 ? 'gear-active' : ''}" id="btn-toggle-gear" title="${isJa ? '車輪(ギア)の格納・展開 [Gキー]' : 'Toggle Landing Gear [G]'}">
                     <span class="btn-subtext">[G]</span>
                     <span class="gear-btn-label">${this.gear > 0.5 ? (isJa ? '車輪 (展開)' : 'Gear Down') : (isJa ? '車輪 (格納)' : 'Gear Up')}</span>
                   </button>
-                  <button class="cockpit-act-btn ${this.airbrake > 0.5 ? 'brake-active' : ''}" id="btn-toggle-airbrake" title="エアブレーキの開閉 [Bキー]">
+                  <button class="cockpit-act-btn ${this.airbrake > 0.5 ? 'brake-active' : ''}" id="btn-toggle-airbrake" title="${isJa ? 'エアブレーキの開閉 [Bキー]' : 'Toggle Speed Brake [B]'}">
                     <span class="btn-subtext">[B]</span>
                     <span class="brake-btn-label">${this.airbrake > 0.5 ? (isJa ? 'ブレーキ (開)' : 'Brake (ON)') : (isJa ? 'ブレーキ (閉)' : 'Brake (OFF)')}</span>
                   </button>
-                  <button class="cockpit-act-btn ${this.smokeOn ? 'smoke-active' : ''}" id="btn-manual-smoke" title="スモーク噴射切替 [Spaceキー]">
+                  <button class="cockpit-act-btn ${this.smokeOn ? 'smoke-active' : ''}" id="btn-manual-smoke" title="${isJa ? 'スモーク噴射切替 [Spaceキー]' : 'Toggle Smoke [Space]'}">
                     <span class="btn-subtext">[Space]</span>
                     <span class="smoke-btn-label">${this.smokeOn ? (isJa ? 'スモーク (ON)' : 'Smoke ON') : (isJa ? 'スモーク (OFF)' : 'Smoke OFF')}</span>
                   </button>
@@ -265,29 +265,29 @@ export class ControlPanel {
               ${this.isLiveryOpen ? `
                 <div class="accordion-body">
                   <div class="livery-palette-grid">
-                    <button class="livery-btn ${this.pilotLivery === 'gold' ? 'active' : ''}" data-livery="gold" title="ゴールド・リーダー">
+                    <button class="livery-btn ${this.pilotLivery === 'gold' ? 'active' : ''}" data-livery="gold" title="${isJa ? 'ゴールド・リーダー' : 'Special Gold Lead'}">
                       <span class="livery-swatch gold-swatch"></span>
-                      <span class="livery-btn-name">ゴールド</span>
+                      <span class="livery-btn-name">${i18n.t('liveryShortGold')}</span>
                     </button>
-                    <button class="livery-btn ${this.pilotLivery === 'red' ? 'active' : ''}" data-livery="red" title="クリムゾン・レッド">
+                    <button class="livery-btn ${this.pilotLivery === 'red' ? 'active' : ''}" data-livery="red" title="${isJa ? 'クリムゾン・レッド' : 'Acro Crimson Red'}">
                       <span class="livery-swatch red-swatch"></span>
-                      <span class="livery-btn-name">レッド</span>
+                      <span class="livery-btn-name">${i18n.t('liveryShortRed')}</span>
                     </button>
-                    <button class="livery-btn ${this.pilotLivery === 'neon' ? 'active' : ''}" data-livery="neon" title="サイバー・ネオン">
+                    <button class="livery-btn ${this.pilotLivery === 'neon' ? 'active' : ''}" data-livery="neon" title="${isJa ? 'サイバー・ネオン' : 'Cyber Neon Cyan'}">
                       <span class="livery-swatch neon-swatch"></span>
-                      <span class="livery-btn-name">ネオン</span>
+                      <span class="livery-btn-name">${i18n.t('liveryShortNeon')}</span>
                     </button>
-                    <button class="livery-btn ${this.pilotLivery === 'stealth' ? 'active' : ''}" data-livery="stealth" title="白＋ハイビズ・オレンジ">
+                    <button class="livery-btn ${this.pilotLivery === 'stealth' ? 'active' : ''}" data-livery="stealth" title="${isJa ? '白＋ハイビズ・オレンジ' : 'White & Hi-Vis Orange'}">
                       <span class="livery-swatch stealth-swatch"></span>
-                      <span class="livery-btn-name">オレンジ</span>
+                      <span class="livery-btn-name">${i18n.t('liveryShortStealth')}</span>
                     </button>
-                    <button class="livery-btn ${this.pilotLivery === 'sakura' ? 'active' : ''}" data-livery="sakura" title="サクラ・ピンク">
+                    <button class="livery-btn ${this.pilotLivery === 'sakura' ? 'active' : ''}" data-livery="sakura" title="${isJa ? 'サクラ・ピンク' : 'Cherry Blossom Pink'}">
                       <span class="livery-swatch sakura-swatch"></span>
-                      <span class="livery-btn-name">サクラ</span>
+                      <span class="livery-btn-name">${i18n.t('liveryShortSakura')}</span>
                     </button>
-                    <button class="livery-btn ${this.pilotLivery === 'standard' ? 'active' : ''}" data-livery="standard" title="標準ブルーインパルス">
+                    <button class="livery-btn ${this.pilotLivery === 'standard' ? 'active' : ''}" data-livery="standard" title="${isJa ? '標準ブルーインパルス' : 'Standard Blue Impulse'}">
                       <span class="livery-swatch standard-swatch"></span>
-                      <span class="livery-btn-name">通常青白</span>
+                      <span class="livery-btn-name">${i18n.t('liveryShortStandard')}</span>
                     </button>
                   </div>
                   <div class="marker-toggle-row">
@@ -350,9 +350,9 @@ export class ControlPanel {
                   <div class="smoke-slider-wrapper">
                     <input type="range" min="10" max="100" value="${Math.round(this.smokeDensity * 100)}" class="smoke-range-slider" id="smoke-density-slider" />
                     <div class="smoke-quick-preset-row">
-                      <button class="smoke-preset-btn ${Math.round(this.smokeDensity * 100) === 25 ? 'active' : ''}" data-smoke-preset="25">薄(25%)</button>
-                      <button class="smoke-preset-btn ${Math.round(this.smokeDensity * 100) === 45 ? 'active' : ''}" data-smoke-preset="45">標準(45%)</button>
-                      <button class="smoke-preset-btn ${Math.round(this.smokeDensity * 100) === 75 ? 'active' : ''}" data-smoke-preset="75">濃(75%)</button>
+                      <button class="smoke-preset-btn ${Math.round(this.smokeDensity * 100) === 25 ? 'active' : ''}" data-smoke-preset="25">${i18n.t('smokePresetLight')}</button>
+                      <button class="smoke-preset-btn ${Math.round(this.smokeDensity * 100) === 45 ? 'active' : ''}" data-smoke-preset="45">${i18n.t('smokePresetMid')}</button>
+                      <button class="smoke-preset-btn ${Math.round(this.smokeDensity * 100) === 75 ? 'active' : ''}" data-smoke-preset="75">${i18n.t('smokePresetDense')}</button>
                     </div>
                   </div>
                 </div>
@@ -399,14 +399,14 @@ export class ControlPanel {
             ${this.isHelpOpen ? `
               <div class="accordion-body">
                 <div class="help-box" style="margin: 0;">
-                  <div class="help-item"><b>${isJa ? '機首上げ/下げ' : 'Pitch Up/Down'}</b>: S / ↓ (引いて上昇), W / ↑ (倒して降下)</div>
-                  <div class="help-item"><b>${isJa ? 'ロール(傾き)' : 'Roll'}</b>: A / D または ← / →</div>
-                  <div class="help-item"><b>${isJa ? 'ラダー' : 'Rudder'}</b>: Q / E (左右旋回・ノーズホイール)</div>
-                  <div class="help-item"><b>${isJa ? 'スロットル' : 'Throttle'}</b>: Shift (加速) / Ctrl (減速)</div>
-                  <div class="help-item"><b>${isJa ? '車輪ブレーキ' : 'Brake'}</b>: Ctrl長押し または B (地上完全停止)</div>
-                  <div class="help-item"><b>${isJa ? 'ギア / エアブレーキ' : 'Gear / Airbrake'}</b>: G (車輪) / B (空力減速)</div>
-                  <div class="help-item"><b>${isJa ? 'スモーク' : 'Smoke'}</b>: Space キー</div>
-                  <div class="help-item highlight-key"><b>${isJa ? '再開 / ガイド切替' : 'Restart / Guide'}</b>: R (リセット) / I (指導表示)</div>
+                  <div class="help-item"><b>${isJa ? '機首上げ/下げ' : 'Pitch Up/Down'}</b>: ${isJa ? 'S / ↓ (引いて上昇), W / ↑ (倒して降下)' : 'S / ↓ (Pull Up), W / ↑ (Push Down)'}</div>
+                  <div class="help-item"><b>${isJa ? 'ロール(傾き)' : 'Roll (Bank)'}</b>: ${isJa ? 'A / D または ← / →' : 'A / D or ← / →'}</div>
+                  <div class="help-item"><b>${isJa ? 'ラダー' : 'Rudder (Yaw)'}</b>: ${isJa ? 'Q / E (左右旋回・ノーズホイール)' : 'Q / E (Yaw / Ground Steering)'}</div>
+                  <div class="help-item"><b>${isJa ? 'スロットル' : 'Throttle'}</b>: ${isJa ? 'Shift (加速) / Ctrl (減速)' : 'Shift (Accelerate) / Ctrl (Decelerate)'}</div>
+                  <div class="help-item"><b>${isJa ? '車輪ブレーキ' : 'Wheel Brakes'}</b>: ${isJa ? 'Ctrl長押し または B (地上完全停止)' : 'Hold Ctrl or B (Ground Stop)'}</div>
+                  <div class="help-item"><b>${isJa ? 'ギア / エアブレーキ' : 'Gear / Speed Brake'}</b>: ${isJa ? 'G (車輪) / B (空力減速)' : 'G (Gear) / B (Airbrake)'}</div>
+                  <div class="help-item"><b>${isJa ? 'スモーク' : 'Smoke'}</b>: ${isJa ? 'Space キー' : 'Space Key'}</div>
+                  <div class="help-item highlight-key"><b>${isJa ? '再開 / ガイド切替' : 'Restart / Guide'}</b>: ${isJa ? 'R (リセット) / I (指導表示)' : 'R (Reset) / I (Toggle Guide)'}</div>
                 </div>
               </div>
             ` : ''}
@@ -419,31 +419,70 @@ export class ControlPanel {
   }
 
   getCockpitDescription(cockpitId) {
-    if (cockpitId === 'cockpit_1') return '👑 <b>1番機 (編隊長)</b>: 先頭から滑走路や空を見渡し、後方に2〜5番機を従えます。';
-    if (cockpitId === 'cockpit_2') return '🪶 <b>2番機 (左翼)</b>: 右前方に1番機、右隣に4番機を見ながら編隊飛行します。';
-    if (cockpitId === 'cockpit_3') return '🪶 <b>3番機 (右翼)</b>: 左前方に1番機、左隣に4番機を見ながら編隊飛行します。';
-    if (cockpitId === 'cockpit_4') return '🎯 <b>4番機 (スロット)</b>: 前方の1番機、左右の2・3番機の直後から見上げます。';
-    return '⚡ <b>5番機 (ソロ)</b>: 4機編隊を見ながら単独離陸・合流・アクロバットを行います。';
+    const isJa = i18n.lang === 'ja';
+    if (cockpitId === 'cockpit_1') {
+      return isJa
+        ? '👑 <b>1番機 (編隊長)</b>: 先頭から滑走路や空を見渡し、後方に2〜5番機を従えます。'
+        : '👑 <b>#1 Lead (Formation Leader)</b>: Leading from the front with #2-#5 trailing in formation.';
+    }
+    if (cockpitId === 'cockpit_2') {
+      return isJa
+        ? '🪶 <b>2番機 (左翼)</b>: 右前方に1番機、右隣に4番機を見ながら編隊飛行します。'
+        : '🪶 <b>#2 Left Wing</b>: Formation flight viewing #1 Lead to forward right and #4 to the right.';
+    }
+    if (cockpitId === 'cockpit_3') {
+      return isJa
+        ? '🪶 <b>3番機 (右翼)</b>: 左前方に1番機、左隣に4番機を見ながら編隊飛行します。'
+        : '🪶 <b>#3 Right Wing</b>: Formation flight viewing #1 Lead to forward left and #4 to the left.';
+    }
+    if (cockpitId === 'cockpit_4') {
+      return isJa
+        ? '🎯 <b>4番機 (スロット)</b>: 前方の1番機、左右の2・3番機の直後から見上げます。'
+        : '🎯 <b>#4 Slot</b>: Trailing center position looking up into the pocket of #1-#3.';
+    }
+    return isJa
+      ? '⚡ <b>5番機 (ソロ)</b>: 4機編隊を見ながら単独離陸・合流・アクロバットを行います。'
+      : '⚡ <b>#5 Solo</b>: Solo takeoff, high-G join-up, and dynamic aerobatics around the formation.';
   }
 
   getBoardingDescription(boardId) {
-    if (boardId === '1_lead') return '👑 <b>1番機 (編隊長) に搭乗中</b>: あなたが操縦し、2〜5番機(AI)が追従します。';
-    if (boardId === '2_wing') return '🪶 <b>2番機 (左翼) に搭乗中</b>: 1番機(AI)に合わせて左翼位置で操縦します。';
-    if (boardId === '3_wing') return '🪶 <b>3番機 (右翼) に搭乗中</b>: 1番機(AI)に合わせて右翼位置で操縦します。';
-    if (boardId === '4_slot') return '🎯 <b>4番機 (スロット) に搭乗中</b>: 1〜3番機(AI)の直後スロット位置で操縦します。';
-    return '⚡ <b>5番機 (ソロ機) に搭乗中</b>: 1〜4番機(AI)の編隊を見ながら自由にアクロバット機動できます。';
+    const isJa = i18n.lang === 'ja';
+    if (boardId === '1_lead') {
+      return isJa
+        ? '👑 <b>1番機 (編隊長) に搭乗中</b>: あなたが操縦し、2〜5番機(AI)が追従します。'
+        : '👑 <b>Piloting #1 Lead</b>: You command the flight while #2-#5 AI wingmen follow you.';
+    }
+    if (boardId === '2_wing') {
+      return isJa
+        ? '🪶 <b>2番機 (左翼) に搭乗中</b>: 1番機(AI)に合わせて左翼位置で操縦します。'
+        : '🪶 <b>Piloting #2 Left Wing</b>: Fly close left-wing formation off #1 Lead (AI).';
+    }
+    if (boardId === '3_wing') {
+      return isJa
+        ? '🪶 <b>3番機 (右翼) に搭乗中</b>: 1番機(AI)に合わせて右翼位置で操縦します。'
+        : '🪶 <b>Piloting #3 Right Wing</b>: Fly close right-wing formation off #1 Lead (AI).';
+    }
+    if (boardId === '4_slot') {
+      return isJa
+        ? '🎯 <b>4番機 (スロット) に搭乗中</b>: 1〜3番機(AI)の直後スロット位置で操縦します。'
+        : '🎯 <b>Piloting #4 Slot</b>: Hold formation in the diamond slot pocket right behind #1-#3 (AI).';
+    }
+    return isJa
+      ? '⚡ <b>5番機 (ソロ機) に搭乗中</b>: 1〜4番機(AI)の編隊を見ながら自由にアクロバット機動できます。'
+      : '⚡ <b>Piloting #5 Solo Jet</b>: Perform solo aerobatics freely around the 4-ship formation (AI).';
   }
 
   getLiveryShortName(liveryId) {
+    const isJa = i18n.lang === 'ja';
     const names = {
-      gold: 'ゴールド',
-      red: 'レッド',
-      neon: 'ネオン',
-      stealth: 'オレンジ',
-      sakura: 'サクラ',
-      standard: '通常青白',
+      gold: isJa ? 'ゴールド' : 'Gold',
+      red: isJa ? 'レッド' : 'Red',
+      neon: isJa ? 'ネオン' : 'Neon',
+      stealth: isJa ? 'オレンジ' : 'Orange',
+      sakura: isJa ? 'サクラ' : 'Sakura',
+      standard: isJa ? '通常青白' : 'Standard',
     };
-    return names[liveryId] || 'ゴールド';
+    return names[liveryId] || (isJa ? 'ゴールド' : 'Gold');
   }
 
   getLiveryName(liveryId) {

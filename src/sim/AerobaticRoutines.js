@@ -72,7 +72,12 @@ export class AerobaticRoutines {
     let formationType = 'delta';
     let customOffsets = null;
     let individualPlaneStates = null;
-    let phaseName = 'Display Maneuver';
+    let phaseName = '演目飛行';
+    let phaseNameEn = 'Display Maneuver';
+    const setPhase = (ja, en) => {
+      phaseName = ja;
+      phaseNameEn = en;
+    };
     let useCustomQuat = false;
 
     // Formation Reference Offsets
@@ -111,7 +116,7 @@ export class AerobaticRoutines {
 
       if (t < 15.0) {
         // Phase 1: 離陸滑走 ＆ リフトオフ
-        phaseName = '滑走路07 離陸滑走 ＆ リフトオフ';
+        setPhase('滑走路07 離陸滑走 ＆ リフトオフ', 'Runway 07 Takeoff Roll & Liftoff');
         const progress = t / 15.0;
         const dist = rwyDistStart + progress * (rwyDistEnd - rwyDistStart);
         airspeed = 35.0 + progress * 55.0; // 35 -> 90 m/s
@@ -133,7 +138,7 @@ export class AerobaticRoutines {
         useCustomQuat = true;
       } else if (t < 45.0) {
         // Phase 2: 松島湾上空へ右旋回クライム (180°旋回)
-        phaseName = '松島湾上空へ右旋回クライム ＆ パノラマ上昇';
+        setPhase('松島湾上空へ右旋回クライム ＆ パノラマ上昇', 'Right Turn Climb over Matsushima Bay');
         gear = 0.0;
         isSmoking = true;
         airspeed = 105.0;
@@ -161,7 +166,7 @@ export class AerobaticRoutines {
         gForce = 1.3;
       } else if (t < 85.0) {
         // Phase 3: 松島湾上空の8の字旋回 ＆ バレルロール
-        phaseName = '松島湾上空 自由巡航 ＆ 優雅なバレルロール';
+        setPhase('松島湾上空 自由巡航 ＆ 優雅なバレルロール', 'Bay Cruise & Barrel Roll');
         gear = 0.0;
         isSmoking = true;
         airspeed = 125.0;
@@ -189,7 +194,7 @@ export class AerobaticRoutines {
         gForce = 1.5;
       } else {
         // Phase 4: 滑走路07上空へローパス通過 ＆ クライム
-        phaseName = '基地上空 高速ローパス ＆ 自由アセント';
+        setPhase('基地上空 高速ローパス ＆ 自由アセント', 'High-Speed Low Pass & Climb');
         gear = 0.0;
         isSmoking = true;
         airspeed = 145.0;
@@ -213,7 +218,7 @@ export class AerobaticRoutines {
     else if (this.routineId === 'diamond_takeoff') {
       formationType = 'diamond';
       if (t < 20.0) {
-        phaseName = '1〜4番機 ダイヤモンド離陸滑走 (5番機 待機中)';
+        setPhase('1〜4番機 ダイヤモンド離陸滑走 (5番機 待機中)', '#1-#4 Diamond Takeoff Roll (#5 Holding)');
         const progress = t / 20.0;
         const dist = -1100.0 + progress * 1600.0;
         airspeed = 35.0 + progress * 55.0; // 35 m/s (~70kt) -> 90 m/s (~175kt)
@@ -231,7 +236,7 @@ export class AerobaticRoutines {
         }
         customOffsets = diamondOffsets;
       } else if (t < 52.0) {
-        phaseName = '1〜4番機 ダーティーループ (5番機 単独ロールオン離陸)';
+        setPhase('1〜4番機 ダーティーループ (5番機 単独ロールオン離陸)', '#1-#4 Dirty Loop (#5 Solo Roll-on Takeoff)');
         gear = t < 42.0 ? 1.0 : Math.max(0, 1.0 - (t - 42.0) / 4.0);
         isSmoking = true;
         airspeed = 95.0; // Constant ~185 kt throughout loop
@@ -261,7 +266,11 @@ export class AerobaticRoutines {
         customOffsets = diamondOffsets;
 
       } else if (t < 72.0) {
-        phaseName = t < 60.0 ? '5番機 空中合流アプローチ中' : '4番機・5番機 デルタ隊形展開 ＆ 空中合流';
+        if (t < 60.0) {
+          setPhase('5番機 空中合流アプローチ中', '#5 In-Flight Join-up Approach');
+        } else {
+          setPhase('4番機・5番機 デルタ隊形展開 ＆ 空中合流', '#4 & #5 Delta Morphing & Join-up');
+        }
         gear = 0.0;
         isSmoking = true;
         airspeed = 110.0; // ~215 kt
@@ -287,7 +296,7 @@ export class AerobaticRoutines {
           ];
         }
       } else if (t < 98.0) {
-        phaseName = '5機デルタ編隊 松島湾上空 360°大旋回';
+        setPhase('5機デルタ編隊 松島湾上空 360°大旋回', '5-Ship Delta 360° Orbit over Matsushima Bay');
         formationType = 'delta';
         gear = 0.0;
         isSmoking = true;
@@ -306,7 +315,7 @@ export class AerobaticRoutines {
         gForce = 1.8;
         customOffsets = deltaOffsets;
       } else {
-        phaseName = '5機デルタ編隊 松島基地上空 高速フライパス';
+        setPhase('5機デルタ編隊 松島基地上空 高速フライパス', '5-Ship Delta High-Speed Base Flypast');
         formationType = 'delta';
         gear = 0.0;
         isSmoking = true;
@@ -390,7 +399,7 @@ export class AerobaticRoutines {
       airspeed = 100.0; // ~195 kt
 
       if (t < 30.0) {
-        phaseName = '松島基地滑走路07 5機デルタ進入 (Ingress)';
+        setPhase('松島基地滑走路07 5機デルタ進入 (Ingress)', 'Runway 07 5-Ship Delta Ingress');
         isSmoking = false;
         const inT = t / 30.0;
         const dist = -3000.0 + inT * 3500.0;
@@ -398,7 +407,7 @@ export class AerobaticRoutines {
         pitch = 0.0;
         gForce = 1.0;
       } else if (t < 65.0) {
-        phaseName = '5機デルタ・バーティカル大宙返り (4G Vertical Loop)';
+        setPhase('5機デルタ・バーティカル大宙返り (4G Vertical Loop)', '5-Ship Delta 4G Vertical Loop');
         isSmoking = true;
         airspeed = 105.0; // ~205 kt
         const loopT = (t - 30.0) / 35.0;
@@ -426,7 +435,7 @@ export class AerobaticRoutines {
         gForce = 3.8 + Math.cos(angle) * 1.2;
 
       } else if (t < 90.0) {
-        phaseName = '5機デルタ・ワイドバレルロール (Wide Barrel Roll)';
+        setPhase('5機デルタ・ワイドバレルロール (Wide Barrel Roll)', '5-Ship Delta Wide Barrel Roll');
         isSmoking = true;
         airspeed = 115.0;
         const rT = (t - 65.0) / 25.0;
@@ -436,7 +445,7 @@ export class AerobaticRoutines {
         bank = rT * 360.0; // Roll rate ~14.4 deg/s (comfortable manual aileron roll)
         gForce = 1.4;
       } else {
-        phaseName = '松島湾上空 5機大旋回 ＆ アフターバーナークライム';
+        setPhase('松島湾上空 5機大旋回 ＆ アフターバーナークライム', '5-Ship Orbit & Climb over Matsushima Bay');
         airspeed = 125.0;
         const tT = (t - 90.0) / 30.0;
         const turnAngle = tT * Math.PI * 1.5;
@@ -469,7 +478,7 @@ export class AerobaticRoutines {
       ];
 
       if (t < 25.0) {
-        phaseName = '松島基地上空 急加速進入 (Ingress)';
+        setPhase('松島基地上空 急加速進入 (Ingress)', 'High-Speed Ingress over Matsushima Base');
         isSmoking = false;
         const inT = t / 25.0;
         const dist = -2600.0 + inT * 2200.0;
@@ -478,7 +487,7 @@ export class AerobaticRoutines {
         gForce = 1.0;
         customOffsets = deltaOffsets;
       } else if (t < 45.0) {
-        phaseName = '5機垂直急上昇 (Vertical Climb to 1,200m)';
+        setPhase('5機垂直急上昇 (Vertical Climb to 1,200m)', '5-Ship Vertical Climb to 1,200m');
         isSmoking = false;
         const pT = (t - 25.0) / 20.0;
         const easeClimb = pT * pT * (3.0 - 2.0 * pT);
@@ -488,7 +497,7 @@ export class AerobaticRoutines {
         gForce = 3.5;
         customOffsets = deltaOffsets;
       } else if (t < 60.0) {
-        phaseName = '頂点5機ブレイク (Apex 5-Way Star Blossom)';
+        setPhase('頂点5機ブレイク (Apex 5-Way Star Blossom)', 'Apex 5-Way Star Blossom Break');
         isSmoking = true;
         const bT = (t - 45.0) / 15.0;
         pitch = 0.0;
@@ -504,7 +513,7 @@ export class AerobaticRoutines {
           );
         });
       } else if (t < 85.0) {
-        phaseName = '大空の巨大星を描く (Star Cross Pattern)';
+        setPhase('大空の巨大星を描く (Star Cross Pattern)', 'Drawing Giant Star Cross Pattern');
         isSmoking = true;
         const sT = (t - 60.0) / 25.0;
         pos.set(fwd07X * (300.0 + sT * 2500.0), 1100.0 - sT * 150.0, fwd07Z * (300.0 + sT * 2500.0));
@@ -520,7 +529,7 @@ export class AerobaticRoutines {
           );
         });
       } else if (t < 112.0) {
-        phaseName = '5機水平再編隊合流 (Rejoining into 5-Ship Delta)';
+        setPhase('5機水平再編隊合流 (Rejoining into 5-Ship Delta)', 'Rejoining into 5-Ship Delta');
         isSmoking = true;
         const rT = (t - 85.0) / 27.0;
         const ease = rT * rT * (3.0 - 2.0 * rT);
@@ -540,7 +549,7 @@ export class AerobaticRoutines {
           );
         });
       } else {
-        phaseName = '5機デルタ編隊 松島湾上空 フライパス';
+        setPhase('5機デルタ編隊 松島湾上空 フライパス', '5-Ship Delta Flypast over Matsushima Bay');
         customOffsets = deltaOffsets;
         isSmoking = true;
         const fT = (t - 112.0) / 8.0;
@@ -560,7 +569,7 @@ export class AerobaticRoutines {
       formationType = 'delta';
 
       if (t < 30.0) {
-        phaseName = '松島基地滑走路07 超密集デルタ低空進入 (Low Ingress)';
+        setPhase('松島基地滑走路07 超密集デルタ低空進入 (Low Ingress)', 'Runway 07 Ultra-Tight Delta Low Ingress');
         isSmoking = false;
         const inT = t / 30.0;
         const dist = -3000.0 + inT * 3000.0;
@@ -568,7 +577,7 @@ export class AerobaticRoutines {
         pitch = 0.0;
         customOffsets = deltaOffsets;
       } else if (t < 65.0) {
-        phaseName = 'レベルサンライズ扇状大開花ブレイク (5-Way Fan Break)';
+        setPhase('レベルサンライズ扇状大開花ブレイク (5-Way Fan Break)', 'Level Sunrise 5-Way Fan Break');
         isSmoking = true;
         const bT = (t - 30.0) / 35.0;
         const ease = bT * bT * (3.0 - 2.0 * bT);
@@ -584,7 +593,7 @@ export class AerobaticRoutines {
           new THREE.Vector3(32.0 + ease * 220.0, ease * 15.0, 32.0 + ease * 40.0),
         ];
       } else if (t < 97.0) {
-        phaseName = '外周大半径旋回 (Tactical Perimeter Turns)';
+        setPhase('外周大半径旋回 (Tactical Perimeter Turns)', 'Tactical Perimeter Turns');
         isSmoking = true;
         const pT = (t - 65.0) / 32.0;
         const turnAngle = pT * Math.PI * 2.0; // 360 degree orbit back to runway centerline
@@ -606,7 +615,7 @@ export class AerobaticRoutines {
           new THREE.Vector3(32.0 + ease * 220.0, ease * 15.0, 32.0 + ease * 40.0),
         ];
       } else {
-        phaseName = '5機デルタ編隊再集合 ＆ 松島基地フライパス';
+        setPhase('5機デルタ編隊再集合 ＆ 松島基地フライパス', '5-Ship Delta Reassembly & Base Flypast');
         formationType = 'delta';
         customOffsets = deltaOffsets;
         isSmoking = true;
@@ -627,7 +636,7 @@ export class AerobaticRoutines {
       airspeed = 120.0;
 
       if (t < 30.0) {
-        phaseName = '松島基地滑走路07 トレイル進入 (Trail Ingress)';
+        setPhase('松島基地滑走路07 トレイル進入 (Trail Ingress)', 'Runway 07 Trail Ingress');
         formationType = 'trail';
         customOffsets = trailOffsets;
         isSmoking = false;
@@ -636,7 +645,7 @@ export class AerobaticRoutines {
         pos.set(fwd07X * dist, 200.0, fwd07Z * dist);
         pitch = 0.0;
       } else if (t < 75.0) {
-        phaseName = 'トレイルからデルタへ 360°大旋回変形ターン (Changeover Turn)';
+        setPhase('トレイルからデルタへ 360°大旋回変形ターン (Changeover Turn)', 'Trail to Delta 360° Changeover Turn');
         formationType = 'delta';
         isSmoking = true;
         const turnT = (t - 30.0) / 45.0;
@@ -663,7 +672,7 @@ export class AerobaticRoutines {
           new THREE.Vector3().lerpVectors(trailOffsets[4], deltaOffsets[4], ease),
         ];
       } else {
-        phaseName = '完成デルタ編隊 松島基地高速フライパス (Flypast)';
+        setPhase('完成デルタ編隊 松島基地高速フライパス (Flypast)', 'Full Delta Formation High-Speed Flypast');
         formationType = 'delta';
         customOffsets = deltaOffsets;
         isSmoking = true;
@@ -685,7 +694,7 @@ export class AerobaticRoutines {
       airspeed = 115.0;
 
       if (t < 75.0) {
-        phaseName = '連続螺旋コークスクリュー (Continuous Spiral Corkscrew)';
+        setPhase('連続螺旋コークスクリュー (Continuous Spiral Corkscrew)', 'Continuous Spiral Corkscrew');
         formationType = 'trail';
         isSmoking = true;
         const cT = t / 75.0;
@@ -757,7 +766,7 @@ export class AerobaticRoutines {
         };
 
       } else if (t < 100.0) {
-        phaseName = '螺旋ロール完了 ＆ デルタ編隊へスムーズ合流 (Rejoining)';
+        setPhase('螺旋ロール完了 ＆ デルタ編隊へスムーズ合流 (Rejoining)', 'Spiral Complete & Delta Rejoin');
         formationType = 'delta';
         isSmoking = true;
         const rT = (t - 75.0) / 25.0;
@@ -784,7 +793,7 @@ export class AerobaticRoutines {
         individualPlaneStates[4] = createPlaneState(p5Pos, fwd07, 0.0, 115.0, true);
 
       } else {
-        phaseName = '5機デルタ編隊 松島湾上空 大旋回 (Bay Orbit)';
+        setPhase('5機デルタ編隊 松島湾上空 大旋回 (Bay Orbit)', '5-Ship Delta Orbit over Matsushima Bay');
         formationType = 'delta';
         customOffsets = deltaOffsets;
         isSmoking = true;
@@ -826,7 +835,7 @@ export class AerobaticRoutines {
       ];
 
       if (t < 30.0) {
-        phaseName = '滑走路07軸上 低空進入 (Runway 07 Low Approach)';
+        setPhase('滑走路07軸上 低空進入 (Runway 07 Low Approach)', 'Runway 07 Low Approach');
         isSmoking = true;
         const inT = t / 30.0;
         const dist = -3200.0 + inT * 3200.0;
@@ -839,7 +848,7 @@ export class AerobaticRoutines {
         airspeed = 110.0;
         customOffsets = deltaOffsets;
       } else if (t < 60.0) {
-        phaseName = '連続ローリング・コンバット・ピッチ (Sequential Pitch Break)';
+        setPhase('連続ローリング・コンバット・ピッチ (Sequential Pitch Break)', 'Sequential Rolling Combat Pitch Break');
         const t2 = (t - 30.0) / 30.0;
         const breakAngle = t2 * Math.PI;
         const breakR = 750.0;
@@ -866,7 +875,7 @@ export class AerobaticRoutines {
           new THREE.Vector3(32.0 + breakEase * 28.0, -breakEase * 10.0, 32.0 + breakEase * 20.0),
         ];
       } else if (t < 76.0) {
-        phaseName = 'ダウンウィンド 隊形再集結 ＆ 脚下げ (Downwind Re-join & Gear Down)';
+        setPhase('ダウンウィンド 隊形再集結 ＆ 脚下げ (Downwind Re-join & Gear Down)', 'Downwind Re-join & Gear Down');
         isSmoking = false;
         const t3 = (t - 60.0) / 16.0;
         const perpOffset = 1500.0;
@@ -888,7 +897,7 @@ export class AerobaticRoutines {
           return new THREE.Vector3().lerpVectors(breakOffsetsAtEnd[i], landOff, formEase);
         });
       } else if (t < 94.0) {
-        phaseName = 'ベースレグ旋回進入 (Base Turn to Final)';
+        setPhase('ベースレグ旋回進入 (Base Turn to Final)', 'Base Turn to Final');
         isSmoking = false;
         const t4 = (t - 76.0) / 18.0;
         const turnAngle = t4 * Math.PI;
@@ -909,7 +918,7 @@ export class AerobaticRoutines {
         airspeed = 78.0 - t4 * 13.0;
         customOffsets = landingOffsets;
       } else if (t < 108.0) {
-        phaseName = '滑走路07 最終進入 (Runway 07 Final Approach)';
+        setPhase('滑走路07 最終進入 (Runway 07 Final Approach)', 'Runway 07 Final Approach');
         isSmoking = false;
         gear = 1.0;
         heading = rwyHdgDeg;
@@ -932,7 +941,11 @@ export class AerobaticRoutines {
 
         const t6 = (t - 108.0) / 12.0;
         const gT = Math.min(1.0, t6);
-        phaseName = gT < 0.95 ? '滑走路07 タッチダウン ＆ 減速滑走 (Touchdown & Rollout)' : '滑走路07 誘導路前 完全停止 (Runway Full Stop)';
+        if (gT < 0.95) {
+          setPhase('滑走路07 タッチダウン ＆ 減速滑走 (Touchdown & Rollout)', 'Runway 07 Touchdown & Rollout');
+        } else {
+          setPhase('滑走路07 誘導路前 完全停止 (Runway Full Stop)', 'Runway 07 Full Stop');
+        }
         const dist = -950.0 + 1400.0 * (2.0 * gT - gT * gT);
         pos.set(fwd07X * dist, 2.5, fwd07Z * dist);
         pitch = 0.0;
@@ -989,6 +1002,7 @@ export class AerobaticRoutines {
       customOffsets: customOffsets,
       individualPlaneStates: individualPlaneStates,
       phaseName: phaseName,
+      phaseNameEn: phaseNameEn,
       totalDuration: this.totalDuration,
     };
   }
