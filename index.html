@@ -34,8 +34,6 @@
               <button class="ui-scale-btn-step" id="ui-scale-inc-btn" title="UI縮尺を拡大 [ ] キー]">+</button>
               <button class="ui-scale-btn-reset" id="ui-scale-reset-btn" title="標準縮尺(85%)に戻す [0 キー]">↺</button>
             </div>
-            <!-- Manual Modal Button -->
-            <button class="manual-btn" id="manual-modal-btn" title="取扱説明書・操作マニュアル [M]">📖 マニュアル</button>
             <!-- Language Toggle Button -->
             <button class="lang-btn" id="lang-toggle-btn">JA / EN</button>
           </div>
@@ -60,30 +58,6 @@
 
       <!-- Dynamic Flight Instruction / Guidance HUD Banner (Manual Mode) -->
       <div class="flight-instruction-container" id="flight-instruction-container"></div>
-
-      <!-- In-App Manual Modal Overlay -->
-      <div class="manual-modal-overlay" id="manual-modal-overlay" style="display: none;">
-        <div class="manual-modal-card">
-          <div class="manual-modal-header">
-            <div class="manual-header-title-group">
-              <span class="manual-modal-badge">RJST FLIGHT MANUAL</span>
-              <h2 class="manual-modal-title" id="manual-modal-heading">ブルーインパルス 3Dフライトシミュレーター 取扱説明書</h2>
-            </div>
-            <button class="manual-close-btn" id="manual-close-btn" title="閉じる [Esc]">✖</button>
-          </div>
-
-          <div class="manual-tabs-bar" id="manual-tabs-bar">
-            <button class="manual-tab-btn active" data-manual-tab="quickstart">🚀 クイックスタート</button>
-            <button class="manual-tab-btn" data-manual-tab="controls">🕹️ 操縦・キー操作</button>
-            <button class="manual-tab-btn" data-manual-tab="modes">👥 5機 / 1機モード</button>
-            <button class="manual-tab-btn" data-manual-tab="routines">✈️ 7大公式演目</button>
-          </div>
-
-          <div class="manual-modal-body" id="manual-modal-body">
-            <!-- Dynamic Tab Content Injected by JS -->
-          </div>
-        </div>
-      </div>
 
       <!-- Bottom Telemetry & Timeline Dock -->
       <div id="telemetry-container"></div>

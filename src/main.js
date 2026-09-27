@@ -15,7 +15,6 @@ import { CameraController } from './scene/CameraController.js';
 import { ControlPanel } from './ui/ControlPanel.js';
 import { TelemetryUI } from './ui/TelemetryUI.js';
 import { ViewSelector } from './ui/ViewSelector.js';
-import { ManualModal } from './ui/ManualModal.js';
 import { i18n } from './i18n/translations.js';
 
 class BlueImpulseApp {
@@ -237,10 +236,7 @@ class BlueImpulseApp {
       },
     });
 
-    // 5. In-App Interactive User Manual Modal
-    this.manualModal = new ManualModal();
-
-    // 6. Primary Flight Display (PFD HUD) Collapse Handler
+    // 5. Primary Flight Display (PFD HUD) Collapse Handler
     this.initPfdCollapse();
 
     // 7. Instruction Banner Click Events (Hide / Resume toggle)
@@ -818,14 +814,6 @@ class BlueImpulseApp {
         this.updateInstructionBanner(this.freeFlightSim.getLeaderState());
       }
     }
-
-    // Manual Modal Hotkey [M] / Close [Escape]
-    if (e.code === 'KeyM') {
-      if (this.manualModal) this.manualModal.toggle();
-    }
-    if (e.code === 'Escape') {
-      if (this.manualModal) this.manualModal.close();
-    }
   }
 
   onKeyUp(e) {
@@ -870,7 +858,6 @@ class BlueImpulseApp {
     if (this.viewSelector) this.viewSelector.updateLanguage();
     if (this.controlPanel) this.controlPanel.updateLanguage();
     if (this.telemetryUI) this.telemetryUI.updateLanguage();
-    if (this.manualModal) this.manualModal.updateLanguage();
 
     const pfdToggleBtn = document.getElementById('pfd-collapse-btn');
     const pfdHeader = document.getElementById('pfd-header');
